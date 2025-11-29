@@ -15,7 +15,7 @@ export default async function handler(req, res) {
 
     // ❗ MASUKKAN TOKEN DAN CHAT ID DI SINI
     const TELEGRAM_BOT_TOKEN = "8575937845:AAFGdC8BJ5HhpMy3Rqv4S1pgNx-PQwE3LUI";
-    const TELEGRAM_CHAT_ID = "7823130896";
+    const TELEGRAM_CHAT_ID = "1764442475";
 
     const text = `📩 Masukan anonim:\n\n${feedback.trim()}`;
 
