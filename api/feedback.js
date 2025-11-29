@@ -1,68 +1,49 @@
 // api/feedback.js
+// TOKEN & CHAT ID langsung di file (versi paling simpel)
 
 export default async function handler(req, res) {
-  // Hanya izinkan POST
   if (req.method !== 'POST') {
-    return res
-      .status(405)
-      .json({ ok: false, message: 'Method not allowed' });
+    return res.status(405).json({ ok: false, message: 'Method not allowed' });
   }
 
   try {
     const { feedback } = req.body ?? {};
 
-    // Validasi isi pesan
-    if (typeof feedback !== 'string' || !feedback.trim()) {
-      return res
-        .status(400)
-        .json({ ok: false, message: 'Feedback kosong' });
+    if (!feedback || typeof feedback !== 'string' || !feedback.trim()) {
+      return res.status(400).json({ ok: false, message: 'Feedback kosong' });
     }
 
-    // Ambil env dari Vercel
-    const token = process.env.TELEGRAM_BOT_TOKEN;
-    const chatId = process.env.TELEGRAM_CHAT_ID;
+    // ❗ MASUKKAN TOKEN DAN CHAT ID DI SINI
+    const TELEGRAM_BOT_TOKEN = "8575937845:AAFGdC8BJ5HhpMy3Rqv4S1pgNx-PQwE3LUI";
+    const TELEGRAM_CHAT_ID = "7823130896";
 
-    if (!token || !chatId) {
-      // Tidak usah log token, cukup info kalau env kosong
-      console.error('Missing TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID');
-      return res
-        .status(500)
-        .json({ ok: false, message: 'Server belum dikonfigurasi' });
+    const text = `📩 Masukan anonim:\n\n${feedback.trim()}`;
+
+    const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+
+    const body = new URLSearchParams({
+      chat_id: TELEGRAM_CHAT_ID,
+      text,
+      parse_mode: "HTML"
+    });
+
+    const r = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body.toString()
+    });
+
+    const data = await r.json();
+
+    if (!data.ok) {
+      console.error("Telegram error:", data);
+      return res.status(500).json({ ok: false, message: 'Gagal kirim Telegram' });
     }
 
-    const text = `📩 Masukan anonim baru:\n\n${feedback.trim()}`;
-
-    // Kirim ke Telegram
-    const tgRes = await fetch(
-      `https://api.telegram.org/bot${token}/sendMessage`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-          chat_id: chatId,
-          text,
-          parse_mode: 'HTML',
-        }).toString(),
-      }
-    );
-
-    const data = await tgRes.json();
-
-    if (!tgRes.ok || !data.ok) {
-      console.error('Telegram error:', data);
-      return res
-        .status(500)
-        .json({ ok: false, message: 'Gagal kirim ke Telegram' });
-    }
-
-    // Berhasil
     return res.status(200).json({ ok: true, message: 'Terkirim' });
+
   } catch (err) {
-    console.error('Handler error:', err);
-    return res
-      .status(500)
-      .json({ ok: false, message: 'Terjadi kesalahan server' });
+    console.error('Server error:', err);
+    return res.status(500).json({ ok: false, message: 'Terjadi kesalahan server' });
   }
 }
