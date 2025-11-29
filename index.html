@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Masukan Anonim</title>
+  <style>
+    :root {
+      --bg: #f4f5fb;
+      --card-bg: #ffffff;
+      --border: #e2e4ef;
+      --accent: #2563eb;
+      --accent-soft: #eff4ff;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --danger: #dc2626;
+      --success: #16a34a;
+      --radius: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .wrapper {
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      padding: 18px 16px 14px;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      background-color: var(--accent-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: var(--accent);
+    }
+
+    .title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    h1 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .subtitle {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin: 8px 0 14px;
+      line-height: 1.45;
+    }
+
+    .form-group {
+      margin-bottom: 10px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.82rem;
+      margin-bottom: 4px;
+      color: #374151;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 140px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      padding: 10px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      color: var(--text-main);
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      background-color: #f9fafb;
+    }
+
+    textarea::placeholder {
+      color: #9ca3af;
+    }
+
+    textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px var(--accent-soft);
+      background-color: #ffffff;
+    }
+
+    .helper-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .helper {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .counter {
+      font-size: 0.75rem;
+      color: #4b5563;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .status {
+      font-size: 0.8rem;
+      min-height: 1.1em;
+      margin-top: 4px;
+      color: var(--text-muted);
+    }
+    .status.ok {
+      color: var(--success);
+    }
+    .status.err {
+      color: var(--danger);
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 8px;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 8px 16px;
+      background-color: var(--accent);
+      color: #ffffff;
+      font-size: 0.86rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background-color 0.15s ease, transform 0.1s ease,
+        box-shadow 0.1s ease;
+      box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+    }
+
+    button span.icon {
+      font-size: 0.95rem;
+    }
+
+    button:hover:not(:disabled) {
+      background-color: #1d4ed8;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 14px rgba(37, 99, 235, 0.3);
+    }
+
+    button:active:not(:disabled) {
+      transform: translateY(0);
+      box-shadow: 0 3px 8px rgba(37, 99, 235, 0.25);
+    }
+
+    button:disabled {
+      opacity: 0.75;
+      cursor: default;
+      box-shadow: none;
+    }
+
+    .footer {
+      margin-top: 10px;
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      text-align: left;
+    }
+
+    @media (max-width: 480px) {
+      .card {
+        padding: 16px 14px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="card">
+      <div class="header">
+        <div class="icon">💬</div>
+        <div class="title-block">
+          <h1>Masukan Anonim</h1>
+          <p class="subtitle">Kirim keluhan, saran, atau curhat tanpa nama.</p>
+        </div>
+      </div>
+
+      <p class="desc">
+        Tulis saja apa adanya. Aku hanya menerima isi pesan, tanpa tahu siapa pengirimnya.
+      </p>
+
+      <form id="feedback-form">
+        <div class="form-group">
+          <label for="feedback">Pesanmu</label>
+          <textarea
+            id="feedback"
+            name="feedback"
+            maxlength="600"
+            placeholder="Contoh: &quot;Menurut saya komunikasinya perlu lebih jelas sebelum meeting.&quot;"
+            required
+          ></textarea>
+          <div class="helper-row">
+            <span class="helper">Hindari menulis data pribadi (no HP, email, dll).</span>
+            <span class="counter" id="char-counter">0 / 600</span>
+          </div>
+          <div class="status" id="status"></div>
+        </div>
+
+        <div class="actions">
+          <button type="submit" id="submit-btn">
+            <span class="icon">📨</span>
+            <span>Kirim</span>
+          </button>
+        </div>
+      </form>
+
+      <p class="footer">
+        Pesan ini akan langsung dikirim ke Telegram admin dalam bentuk anonim.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('feedback-form');
+    const textarea = document.getElementById('feedback');
+    const statusEl = document.getElementById('status');
+    const submitBtn = document.getElementById('submit-btn');
+    const charCounter = document.getElementById('char-counter');
+
+    function updateCounter() {
+      const len = textarea.value.length;
+      const max = textarea.getAttribute('maxlength') || 600;
+      charCounter.textContent = `${len} / ${max}`;
+    }
+
+    textarea.addEventListener('input', updateCounter);
+    updateCounter();
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      statusEl.textContent = '';
+      statusEl.className = 'status';
+
+      const feedback = textarea.value.trim();
+      if (!feedback) {
+        statusEl.textContent = 'Tolong isi dulu pesannya 🙏';
+        statusEl.classList.add('err');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="icon">⏳</span><span>Mengirim...</span>';
+
+      try {
+        const res = await fetch('/api/feedback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ feedback })
+        });
+
+        const data = await res.json().catch(() => ({}));
+
+        if (!res.ok || !data.ok) {
+          throw new Error('Server error');
+        }
+
+        statusEl.textContent = data.message || 'Terima kasih! Pesanmu sudah terkirim 🙌';
+        statusEl.classList.add('ok');
+        textarea.value = '';
+        updateCounter();
+      } catch (err) {
+        console.error(err);
+        statusEl.textContent = 'Gagal mengirim pesan. Coba lagi ya.';
+        statusEl.classList.add('err');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = '<span class="icon">📨</span><span>Kirim</span>';
+      }
+    });
+  </script>
+</body>
+</html>
